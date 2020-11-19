@@ -23,6 +23,7 @@ USE `catastro` ;
 CREATE TABLE IF NOT EXISTS `catastro`.`ZONA` (
   `NUUMERO_ZONA` INT NOT NULL,
   `AREA` INT NULL,
+  `CONCEJAL` VARCHAR(45)  NULL,
   PRIMARY KEY (`NUUMERO_ZONA`))
 ENGINE = InnoDB;
 
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `catastro`.`BLOQUE` (
   `NOMBRE_ZONA` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`CALLE`, `NUMERO`),
   INDEX `NOMBRE_ZONA_idx` (`NOMBRE_ZONA`  ASC),
-  CONSTRAINT `NOMBRE_ZONA`
+  CONSTRAINT `NOMBRE_ZON`
     FOREIGN KEY (`NOMBRE_ZONA`)
     REFERENCES `catastro`.`ZONA` (`NOMBRE`)
     ON DELETE NO ACTION
@@ -75,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `catastro`.`VIVIENDA` (
   `NOMBRE_ZONA` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`CALLE`, `NUMERO`),
   INDEX `NOMBRE_ZONA_idx` (`NOMBRE_ZONA`  ASC),
-  CONSTRAINT `NOMBRE_ZONA`
+  CONSTRAINT `NOMBRE_ZON`
     FOREIGN KEY (`NOMBRE_ZONA`)
     REFERENCES `catastro`.`ZONA` (`NOMBRE`)
     ON DELETE NO ACTION
@@ -101,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `catastro`.`PERSONA` (
   `PISO_BLOQUE_NUMERO` INT NOT NULL,
   `VIVIENDA_CALLE` VARCHAR(45) NOT NULL,
   `VIVIENDA_NUMERO` INT NOT NULL,
-  PRIMARY KEY (`DNI`, `PISO_CALLE`, `PISO_NUMERO`, `PISO_PLANTA`, `PISO_LETRA`, `PISO_BLOQUE_CALLE`, `PISO_BLOQUE_NUMERO`, `VIVIENDA_CALLE`, `VIVIENDA_NUMERO`),
+  PRIMARY KEY (`DNI`),
   INDEX `fk_PERSONA_PISO1_idx` (`PISO_CALLE` ASC, `PISO_NUMERO` ASC, `PISO_PLANTA` ASC, `PISO_LETRA` ASC, `PISO_BLOQUE_CALLE` ASC, `PISO_BLOQUE_NUMERO`  ASC),
   INDEX `fk_PERSONA_VIVIENDA1_idx` (`VIVIENDA_CALLE` ASC, `VIVIENDA_NUMERO`  ASC),
   CONSTRAINT `fk_PERSONA_PISO1`
@@ -132,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `catastro`.`CALLE` (
   `NOMBRE_ZONA` VARCHAR(45) NOT NULL,
   `ZONA_NOMBRE` VARCHAR(45) NOT NULL,
   `ZONA_NOMBRE1` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`NOMBRE`, `ZONA_NOMBRE`, `ZONA_NOMBRE1`),
+  PRIMARY KEY (`NOMBRE`),
   INDEX `NOMBRE_ZONA_idx` (`NOMBRE_ZONA`  ASC),
   INDEX `fk_CALLE_ZONA1_idx` (`ZONA_NOMBRE`  ASC),
   INDEX `fk_CALLE_ZONA2_idx` (`ZONA_NOMBRE1`  ASC),
@@ -164,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `catastro`.`CONSTRUCCION` (
   `AÑO DE CONSTRUCCION` YEAR(4) NULL,
   `CALLE_NOMBRE` VARCHAR(45) NOT NULL,
   INDEX `NOMBRE_CALLE_idx` (`NOMBRE_CALLE`  ASC),
-  PRIMARY KEY (`NUMERO`, `CALLE_NOMBRE`),
+  PRIMARY KEY (`NUMERO`),
   INDEX `fk_CONSTRUCCION_CALLE1_idx` (`CALLE_NOMBRE`  ASC),
   CONSTRAINT `NOMBRE_CALLE`
     FOREIGN KEY (`NOMBRE_CALLE`)
@@ -178,60 +179,6 @@ CREATE TABLE IF NOT EXISTS `catastro`.`CONSTRUCCION` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `catastro`.`ZONA`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catastro`.`ZONA` (
-  `NUUMERO_ZONA` INT NOT NULL,
-  `AREA` INT NULL,
-  PRIMARY KEY (`NUUMERO_ZONA`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `catastro`.`PRODUCTO`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catastro`.`PRODUCTO` (
-)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `catastro`.`VIVERO`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catastro`.`VIVERO` (
-  `UBICACION` VARCHAR(45) NOT NULL,
-  `HORA_APERTURA` TIME NULL,
-  `HORA_CIERRE` TIME NULL,
-  `NOMBRE` VARCHAR(45) NULL,
-  `NUMERO_ZONA` INT NOT NULL,
-  PRIMARY KEY (`UBICACION`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `catastro`.`EMPLEADO`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catastro`.`EMPLEADO` (
-)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `catastro`.`PEDIDO`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catastro`.`PEDIDO` (
-)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `catastro`.`CLIENTE`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `catastro`.`CLIENTE` (
-)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
