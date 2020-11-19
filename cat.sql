@@ -8,114 +8,103 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema catastro
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `catastro` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema catastro
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `catastro` DEFAULT CHARACTER SET utf8 ;
+USE `catastro` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Zona`
+-- Table `catastro`.`ZONA`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Zona` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Zona` (
-  `Nombre` VARCHAR(45) NOT NULL,
-  `Concejal` VARCHAR(45) NULL,
-  `Area` INT NOT NULL,
-  `NumViviendas` INT NULL,
-  PRIMARY KEY (`Nombre`))
+CREATE TABLE IF NOT EXISTS `catastro`.`ZONA` (
+  `NOMBRE` VARCHAR(45) NOT NULL,
+  `CONCEJAL` VARCHAR(45) NULL,
+  `AREA` INT NOT NULL,
+  PRIMARY KEY (`NOMBRE`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Vivienda`
+-- Table `catastro`.`VIVIENDA`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Vivienda` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Vivienda` (
-  `Calle` VARCHAR(40) NOT NULL,
-  `Numero` INT NOT NULL,
-  `Cantidad de Personas` INT NULL,
-  `NombreZona` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Calle`, `Numero`),
-  CONSTRAINT `NombreZona`
-    FOREIGN KEY (`NombreZona`)
-    REFERENCES `mydb`.`Zona` (`Nombre`)
+CREATE TABLE IF NOT EXISTS `catastro`.`VIVIENDA` (
+  `CALLE` VARCHAR(40) NOT NULL,
+  `NUMERO` INT NOT NULL,
+  `CANTIDAD_DE_PERSONAS` INT NULL,
+  `NOMBRE_ZONA` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`CALLE`, `NUMERO`),
+  CONSTRAINT `NOMBRE_ZON`
+    FOREIGN KEY (`NOMBRE_ZONA`)
+    REFERENCES `catastro`.`ZONA` (`NOMBRE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Bloque`
+-- Table `catastro`.`BLOQUE`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Bloque` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Bloque` (
-  `Calle` VARCHAR(45) NOT NULL,
-  `Numero` INT NOT NULL,
-  `Cantidad de Personas` INT NULL,
-  `nombreZona` VARCHAR(45) NULL,
-  PRIMARY KEY (`Calle`, `Numero`),
-  CONSTRAINT `nombreZ`
-    FOREIGN KEY (`nombreZona`)
-    REFERENCES `mydb`.`Zona` (`Nombre`)
+CREATE TABLE IF NOT EXISTS `catastro`.`BLOQUE` (
+  `CALLE` VARCHAR(45) NOT NULL,
+  `NUMERO` INT NOT NULL,
+  `CANTIDAD_DE_PERSONAS` INT NULL,
+  `NOMBRE_ZONA` VARCHAR(45) NULL,
+  PRIMARY KEY (`CALLE`, `NUMERO`),
+  CONSTRAINT `NOMBRE_ZON`
+    FOREIGN KEY (`NOMBRE_ZONA`)
+    REFERENCES `catastro`.`ZONA` (`NOMBRE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Persona`
+-- Table `catastro`.`PERSONA`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Persona` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Persona` (
-  `DNI` VARCHAR(8) NOT NULL,
-  `Nombre` VARCHAR(45) NOT NULL,
-  `Numero Telefono` INT NULL,
-  `DNI_Lid` VARCHAR(8) NOT NULL,
-  `CalleViv` VARCHAR(40) NULL,
-  `NumeroViv` INT NULL,
-  PRIMARY KEY (`DNI_Lid`),
+CREATE TABLE IF NOT EXISTS `catastro`.`PERSONA` (
+  `CABEZA_FAMILIA` VARCHAR(8) NOT NULL,
+  `NOMBRE` VARCHAR(45) NOT NULL,
+  `NUMERO_TELEFONO` INT NULL,
+  `DNI_LID` VARCHAR(8) NOT NULL,
+  `CALLE_VIV` VARCHAR(40) NULL,
+  `NUMERO_VIV` INT NULL,
+  PRIMARY KEY (`DNI_LID`),
   CONSTRAINT `DNI_`
-    FOREIGN KEY (`DNI`)
-    REFERENCES `mydb`.`Persona` (`DNI_Lid`)
+    FOREIGN KEY (`CABEZA_FAMILIA`)
+    REFERENCES `catastro`.`PERSONA` (`DNI_LID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `CalleViv_`
-    FOREIGN KEY (`CalleViv`, `NumeroViv`)
-    REFERENCES `mydb`.`Vivienda` (`Calle`,`Numero`)
+  CONSTRAINT `CALLE_VIV_`
+    FOREIGN KEY (`CALLE_VIV`, `NUMERO_VIV`)
+    REFERENCES `catastro`.`VIVIENDA` (`CALLE`,`NUMERO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `CalleViv`
-    FOREIGN KEY(`CalleViv`)
-    REFERENCES `mydb`.`Bloque` (`Calle`)
+  CONSTRAINT `CALLE_VIV`
+    FOREIGN KEY(`CALLE_VIV`)
+    REFERENCES `catastro`.`BLOQUE` (`CALLE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Piso`
+-- Table `catastro`.`PISO`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Piso` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`Piso` (
-  `Calle` VARCHAR(45) NOT NULL,
-  `Numero` INT NOT NULL,
-  `Planta` INT NOT NULL,
-  `Letra` VARCHAR(1) NOT NULL,
-  `Superficie` INT NOT NULL,
-  PRIMARY KEY (`Planta`, `Letra`),
-  CONSTRAINT `Calle_`
-    FOREIGN KEY (`Calle`, `Numero`)
-    REFERENCES `mydb`.`Bloque` (`Calle`, `Numero`)
+CREATE TABLE IF NOT EXISTS `catastro`.`PISO` (
+  `CALLE` VARCHAR(45) NOT NULL,
+  `NUMERO` INT NOT NULL,
+  `PLANTA` INT NOT NULL,
+  `LETRA` VARCHAR(1) NOT NULL,
+  `SUPERFICIE` INT NOT NULL,
+  PRIMARY KEY (`CALLE`, `NUMERO`, `PLANTA`, `LETRA`),
+  CONSTRAINT `CALLE_`
+    FOREIGN KEY (`CALLE`, `NUMERO`)
+    REFERENCES `catastro`.`BLOQUE` (`CALLE`, `NUMERO`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
