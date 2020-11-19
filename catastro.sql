@@ -21,10 +21,10 @@ USE `catastro` ;
 -- Table `catastro`.`ZONA`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `catastro`.`ZONA` (
-  `NUUMERO_ZONA` INT NOT NULL,
+  `NOMBRE` VARCHAR(45) NOT NULL,
   `AREA` INT NULL,
   `CONCEJAL` VARCHAR(45)  NULL,
-  PRIMARY KEY (`NUUMERO_ZONA`))
+  PRIMARY KEY (`NOMBRE`))
 ENGINE = InnoDB;
 
 
