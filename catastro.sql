@@ -20,6 +20,8 @@ USE `catastro` ;
 -- -----------------------------------------------------
 -- Table `catastro`.`ZONA`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`ZONA` ;
+
 CREATE TABLE IF NOT EXISTS `catastro`.`ZONA` (
   `NOMBRE` VARCHAR(45) NOT NULL,
   `AREA` INT NULL,
@@ -31,6 +33,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `catastro`.`BLOQUE`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`BLOQUE` ;
+
 CREATE TABLE IF NOT EXISTS `catastro`.`BLOQUE` (
   `CALLE` VARCHAR(45) NOT NULL,
   `NUMERO` INT NOT NULL,
@@ -49,6 +53,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `catastro`.`PISO`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`PISO` ;
+
 CREATE TABLE IF NOT EXISTS `catastro`.`PISO` (
   `CALLE` VARCHAR(45) NOT NULL,
   `NUMERO` INT NOT NULL,
