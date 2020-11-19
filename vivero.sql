@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema viveros
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema viveros
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `viveros` DEFAULT CHARACTER SET utf8 ;
+USE `viveros` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`VIVERO`
+-- Table `viveros`.`VIVERO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`VIVERO` (
+CREATE TABLE IF NOT EXISTS `viveros`.`VIVERO` (
   `UBICACION` INT NOT NULL,
   `HORA_APERTURA` TIME NULL,
   `HORA_CIERRE` TIME NULL,
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ZONA`
+-- Table `viveros`.`ZONA`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`ZONA` (
+CREATE TABLE IF NOT EXISTS `viveros`.`ZONA` (
   `NUMERO_ZONA` INT NOT NULL,
   `AREA` INT NULL,
   `VIVERO_UBICACION` INT NOT NULL,
@@ -41,12 +41,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ZONA` (
   INDEX `ID_PRODUCTO_idx` (`ID_PRODUCTO` ASC)  ,
   CONSTRAINT `fk_ZONA_VIVERO1`
     FOREIGN KEY (`VIVERO_UBICACION`)
-    REFERENCES `mydb`.`VIVERO` (`UBICACION`)
+    REFERENCES `viveros`.`VIVERO` (`UBICACION`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,   
   CONSTRAINT `ID_PROD`
     FOREIGN KEY (`ID_PRODUCTO`)
-    REFERENCES `mydb`.`PRODUCTO` (`COD.BARRAS`)
+    REFERENCES `viveros`.`PRODUCTO` (`COD.BARRAS`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
     )
@@ -54,9 +54,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`PRODUCTO`
+-- Table `viveros`.`PRODUCTO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`PRODUCTO` (
+CREATE TABLE IF NOT EXISTS `viveros`.`PRODUCTO` (
   `COD.BARRAS` INT NOT NULL,
   `PRECIO` VARCHAR(45) NULL,
   `PRODUCTOcol` VARCHAR(45) NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`PRODUCTO` (
   INDEX `ID_PEDIDO_idx` (`ID_PEDIDO` ASC)  ,
   CONSTRAINT `ID_PED`
     FOREIGN KEY (`ID_PEDIDO`)
-    REFERENCES `mydb`.`PEDIDO` (`ID`)
+    REFERENCES `viveros`.`PEDIDO` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
   )
@@ -74,9 +74,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`CLIENTE`
+-- Table `viveros`.`CLIENTE`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`CLIENTE` (
+CREATE TABLE IF NOT EXISTS `viveros`.`CLIENTE` (
   `DNI` INT NOT NULL,
   `CUENTA FIDELIZACION` VARCHAR(2) NULL,
   `email` VARCHAR(45) NULL,
@@ -85,9 +85,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`EMPLEADO`
+-- Table `viveros`.`EMPLEADO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`EMPLEADO` (
+CREATE TABLE IF NOT EXISTS `viveros`.`EMPLEADO` (
   `DNI` INT NOT NULL,
   `COD.SEGURIDAD_SOCIAL` VARCHAR(45) NOT NULL,
   `TIPO_CONTRATO` VARCHAR(45) NULL,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`EMPLEADO` (
   INDEX `VIVERO_UBICACION_idx` (`VIVERO_UBICACION` ASC)  ,
   CONSTRAINT `NUMERO_ZON`
     FOREIGN KEY (`NUMERO_ZONA`, `VIVERO_UBICACION`)
-    REFERENCES `mydb`.`ZONA` (`NUMERO_ZONA`, `VIVERO_UBICACION`)
+    REFERENCES `viveros`.`ZONA` (`NUMERO_ZONA`, `VIVERO_UBICACION`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
   )
@@ -109,9 +109,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`PEDIDO`
+-- Table `viveros`.`PEDIDO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`PEDIDO` (
+CREATE TABLE IF NOT EXISTS `viveros`.`PEDIDO` (
   `ID` INT NOT NULL,
   `FECHA` DATE NULL,
   `ID_PRODUCTO` INT NOT NULL,
@@ -124,17 +124,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`PEDIDO` (
   INDEX `fk_PEDIDO_EMPLEADO1_idx` (`EMPLEADO_DNI` ASC)  ,
   CONSTRAINT `ID_PRODUCT`
     FOREIGN KEY (`ID_PRODUCTO`)
-    REFERENCES `mydb`.`PRODUCTO` (`COD.BARRAS`)
+    REFERENCES `viveros`.`PRODUCTO` (`COD.BARRAS`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PEDIDO_CLIENTE1`
     FOREIGN KEY (`CLIENTE_DNI`)
-    REFERENCES `mydb`.`CLIENTE` (`DNI`)
+    REFERENCES `viveros`.`CLIENTE` (`DNI`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_PEDIDO_EMPLEADO1`
     FOREIGN KEY (`EMPLEADO_DNI`)
-    REFERENCES `mydb`.`EMPLEADO` (`DNI`)
+    REFERENCES `viveros`.`EMPLEADO` (`DNI`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
