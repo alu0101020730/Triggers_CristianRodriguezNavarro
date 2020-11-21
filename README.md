@@ -39,11 +39,10 @@ Para el procedimiento de crear un email le paso como parametros el nombre, el do
 uso DECLARE y SET para asignar valores y tambien hago uso de las funciones de SUBSTRING y CONCAT para formar el nuevo email y por ultimo para devolverlo asigno
 la variable auxiliar a la variable de salida.  
   
-En el trigger compruebo si el valor de email es nulo, si lo es, llamo a la funcion que crea el email con el nombre que se quiere insertar en la tabla y por ultimo asigno
-al NEW.email el valor que devuelve la función.  
+En el trigger compruebo si el valor de email es nulo, si lo es, llamo a la funcion que crea el email con el nombre que se quiere insertar en la tabla y por ultimo asigno al NEW.email el valor que devuelve la función.  
   
 ![ej1](img/ej1.png)  
-
+  
 ### Ejercicio 2
 ```mysql
 USE catastro;
@@ -78,15 +77,15 @@ UPDATE PERSONA SET VIVIENDA_CALLE = 'SSS'
 WHERE DNI = '9111';
 ------ En ambos casos da el error establecido del trigger
 ```
-En este hago 2 triggers, uno para el momento de insertar y otro en caso de querer actualizar y ambos hacen lo mismo, comprueban que los valores de la direccion de la calle del piso
-o de la vivienda no existan a la vez porque en ese caso significaria que tiene dos domicilios.
+  
+En este hago 2 triggers, uno para el momento de insertar y otro en caso de querer actualizar y ambos hacen lo mismo, comprueban que los valores de la direccion de la calle del piso o de la vivienda no existan a la vez porque en ese caso significaria que tiene dos domicilios.  
   
 ![ej2NoError](img/ej2NoError.png)  
 ![ej2UpdateError](img/ej2UpdateError.png)
 ![ej2InsertError](img/ej2InsertError.png)
-
+  
 ### Ejercicio 3
-
+  
 ```mysql
 USE viveros;
 DELIMITER //
@@ -117,8 +116,8 @@ VALUES(50000,NULL,311,10,123456,999);
 DELIMITER ;
 
 ```
-
-En este trigger hago una actualización después de haber insertado en la tabla pedido, cada vez que se hace un pedido, resto a la tabla producto el stock del producto de dicho pedido  
-En el insert de la tabla PEDIDO el 100 que vemos es el stock y en el insert de la tabla PEDIDO, el 10 que vemos es la cantidad que se va a restar a 100 y como vemos en la imagen de debajo, lo ha restado bien
+  
+En este trigger hago una actualización después de haber insertado en la tabla pedido, cada vez que se hace un pedido, resto a la tabla producto el stock del producto de dicho pedido.   
+En el insert de la tabla PEDIDO el 100 que vemos es el stock y en el insert de la tabla PEDIDO, el 10 que vemos es la cantidad que se va a restar a 100 y como vemos en la imagen de debajo, lo ha restado bien.  
   
 ![ej3](img/ej3.png)  
