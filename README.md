@@ -118,7 +118,7 @@ DELIMITER ;
 
 ```
 
-En este trigger hago una actualización después de haber insertado en la tabla pedido, cada vez que se hace un pedido, resto a la tabla producto el stock del producto de dicho
-pedido  
+En este trigger hago una actualización después de haber insertado en la tabla pedido, cada vez que se hace un pedido, resto a la tabla producto el stock del producto de dicho pedido  
+En el insert de la tabla PEDIDO el 100 que vemos es el stock y en el insert de la tabla PEDIDO, el 10 que vemos es la cantidad que se va a restar a 100 y como vemos en la imagen de debajo, lo ha restado bien
   
 ![ej3](img/ej3.png)  
