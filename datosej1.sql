@@ -1,0 +1,7 @@
+USE viveros;
+
+INSERT INTO CLIENTE
+VALUES(9111, 'SI', 'JUAN', NULL);
+
+INSERT INTO CLIENTE
+VALUES(9112, 'SI', 'PEDRO', 'pedrotisimo@gmail.com');
