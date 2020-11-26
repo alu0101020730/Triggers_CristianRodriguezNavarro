@@ -14,7 +14,6 @@ END //
 CREATE TRIGGER trigger_crear_email_before_insert BEFORE INSERT ON CLIENTE FOR EACH ROW
 BEGIN
     IF NEW.email IS NULL THEN
-
         CALL crear_email(NEW.NOMBRE, 'mejorvivero.com', @emailAux);
         set NEW.email = @emailAux;
     END IF;
