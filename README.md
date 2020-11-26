@@ -82,7 +82,7 @@ WHERE DNI = '9111';
 ------ En ambos casos da el error establecido del trigger
 ```
   
-En este hago 2 triggers, uno para el momento de insertar y otro en caso de querer actualizar y ambos hacen lo mismo, comprueban que los valores de la direccion de la calle del piso o de la vivienda no existan a la vez porque en ese caso significaria que tiene dos domicilios.  
+En este hago 2 triggers, uno para el momento de insertar y otro en caso de querer actualizar, el comprueba que los valores de la direccion de la calle del piso o de la vivienda no existan a la vez porque en ese caso significaria que tiene dos domicilios y en el update comprueba que no se esté intentando meter un valor nuevo en vivienda si ya existia un valor en piso y viceversa
   
 ![ej2NoError](img/ej2NoError.png)  
 ![ej2InsertError](img/ej2InsertError.png)
