@@ -19,7 +19,6 @@ END //
 CREATE TRIGGER trigger_crear_email_before_insert BEFORE INSERT ON CLIENTE FOR EACH ROW
 BEGIN
     IF NEW.email IS NULL THEN
-
         CALL crear_email(NEW.NOMBRE, 'mejorvivero.com', @emailAux);
         set NEW.email = @emailAux;
     END IF;
@@ -58,7 +57,9 @@ END //
 
 CREATE TRIGGER trigger_update_persona_vive_en_una_unica_vivienda BEFORE UPDATE ON PERSONA FOR EACH ROW
 BEGIN
-    IF NEW.PISO_CALLE IS NOT NULL and NEW.VIVIENDA_CALLE IS NOT NULL  THEN
+    IF OLD.PISO_CALLE IS NOT NULL and NEW.VIVIENDA_CALLE IS NOT NULL  THEN
+        signal sqlstate '45000' set message_text = 'No puede tener dos domicilios';
+    ELSEIF NEW.PISO_CALLE IS NOT NULL and OLD.VIVIENDA_CALLE IS NOT NULL  THEN
         signal sqlstate '45000' set message_text = 'No puede tener dos domicilios';
     END IF;
 
@@ -84,8 +85,8 @@ WHERE DNI = '9111';
 En este hago 2 triggers, uno para el momento de insertar y otro en caso de querer actualizar y ambos hacen lo mismo, comprueban que los valores de la direccion de la calle del piso o de la vivienda no existan a la vez porque en ese caso significaria que tiene dos domicilios.  
   
 ![ej2NoError](img/ej2NoError.png)  
-![ej2UpdateError](img/ej2UpdateError.png)
 ![ej2InsertError](img/ej2InsertError.png)
+![ej2UpdateError](img/ej2UpdateError.png)
   
 ### Ejercicio 3
   
@@ -93,11 +94,13 @@ En este hago 2 triggers, uno para el momento de insertar y otro en caso de quere
 USE viveros;
 DELIMITER //
 
-CREATE TRIGGER trigger_actualizar_stock AFTER INSERT ON PEDIDO FOR EACH ROW
+CREATE TRIGGER trigger_actualizar_stock AFTER INSERT ON PRODUCTO_PEDIDOS FOR EACH ROW
 BEGIN
-    UPDATE PRODUCTO, PEDIDO SET PRODUCTO.STOCK = PRODUCTO.STOCK - NEW.CANTIDAD
+    UPDATE PRODUCTO, PRODUCTO_PEDIDOS SET PRODUCTO.STOCK = PRODUCTO.STOCK - NEW.CANTIDAD
     WHERE PRODUCTO.COD_BARRAS = NEW.ID_PRODUCTO;
 END //
+
+DELIMITER ;
 
 INSERT INTO VIVERO
 VALUES(10,NULL,NULL);
@@ -115,12 +118,15 @@ INSERT INTO EMPLEADO
 VALUES(999, 'DAADSDAD','AAAA','PEPE',NULL,NULL,1);
 
 INSERT INTO PEDIDO
-VALUES(50000,NULL,311,10,123456,999);
-DELIMITER ;
+VALUES(50000,NULL,123456,999);
+
+INSERT INTO PRODUCTO_PEDIDOS
+VALUES(311,50000,10);
+
 
 ```
   
-En este trigger hago una actualización después de haber insertado en la tabla pedido, cada vez que se hace un pedido, resto a la tabla producto el stock del producto de dicho pedido.   
-En el insert de la tabla PEDIDO el 100 que vemos es el stock y en el insert de la tabla PEDIDO, el 10 que vemos es la cantidad que se va a restar a 100 y como vemos en la imagen de debajo, lo ha restado bien.  
+En este trigger hago una actualización después de haber insertado en la tabla PRODUCTO_PEDIDOS, cada vez que se hace un pedido, resto a la tabla producto el stock del producto de dicho pedido.   
+En el insert de la tabla PRODUCTO el 100 que vemos es el stock y en el insert de la tabla PRODUCTO_PEDIDOS, el 10 que vemos es la cantidad que se va a restar a 100 y como vemos en la imagen de debajo, lo ha restado bien.  
   
 ![ej3](img/ej3.png)  
